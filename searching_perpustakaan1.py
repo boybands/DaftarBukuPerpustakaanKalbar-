@@ -1,16 +1,14 @@
 import streamlit as st
 import json
 import pandas as pd
-import os
 
-# Fungsi untuk membaca data dari file JSON
-def baca_data_dari_file(nama_file):
-    if os.path.exists(nama_file):
-        with open(nama_file, 'r') as file:
-            data = json.load(file)
+# Fungsi untuk membaca data dari file JSON yang diunggah
+def baca_data_dari_file(file):
+    if file is not None:
+        data = json.load(file)
         return data
     else:
-        st.error(f"File '{nama_file}' tidak ditemukan.")
+        st.error("File tidak ditemukan.")
         return None
 
 # Fungsi untuk mencari buku berdasarkan kategori
@@ -19,9 +17,6 @@ def cari_buku(kategori_dicari, data):
         if kategori['kategori'].lower() == kategori_dicari.lower():
             return kategori['buku']
     return None
-
-# Nama file JSON yang ingin dibaca
-nama_file = 'C:\\Users\\rindi\\Downloads\\datajsonbuku.json'
 
 # Pengaturan tampilan
 st.set_page_config(
@@ -39,8 +34,11 @@ Pilih kategori buku pada kolom di bawah dan tekan tombol 'Cari'.
 # Judul aplikasi
 st.title("📚 Pencarian Buku Perpustakaan")
 
-# Membaca data dari file JSON
-data_perpustakaan = baca_data_dari_file(nama_file)
+# Mengunggah file JSON
+uploaded_file = st.file_uploader("Unggah file JSON data perpustakaan", type="json")
+
+# Membaca data dari file JSON yang diunggah
+data_perpustakaan = baca_data_dari_file(uploaded_file)
 
 # Jika data berhasil dibaca
 if data_perpustakaan:
