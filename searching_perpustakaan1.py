@@ -1,15 +1,23 @@
 import streamlit as st
-import json
 import pandas as pd
 
-# Fungsi untuk membaca data dari file JSON yang diunggah
-def baca_data_dari_file(file):
-    if file is not None:
-        data = json.load(file)
-        return data
-    else:
-        st.error("File tidak ditemukan.")
-        return None
+# Data JSON yang disimpan dalam variabel Python
+data_json = [
+    {
+        "kategori": "Fiksi",
+        "buku": [
+            {"judul": "Buku Fiksi 1", "pengarang": "Pengarang 1", "penerbit": "Penerbit 1", "tahun_terbit": 2020, "lantai": 1, "ruangan": "A", "rak": 1},
+            {"judul": "Buku Fiksi 2", "pengarang": "Pengarang 2", "penerbit": "Penerbit 2", "tahun_terbit": 2021, "lantai": 1, "ruangan": "A", "rak": 2}
+        ]
+    },
+    {
+        "kategori": "Non-Fiksi",
+        "buku": [
+            {"judul": "Buku Non-Fiksi 1", "pengarang": "Pengarang 3", "penerbit": "Penerbit 3", "tahun_terbit": 2019, "lantai": 2, "ruangan": "B", "rak": 3},
+            {"judul": "Buku Non-Fiksi 2", "pengarang": "Pengarang 4", "penerbit": "Penerbit 4", "tahun_terbit": 2018, "lantai": 2, "ruangan": "B", "rak": 4}
+        ]
+    }
+]
 
 # Fungsi untuk mencari buku berdasarkan kategori
 def cari_buku(kategori_dicari, data):
@@ -34,11 +42,8 @@ Pilih kategori buku pada kolom di bawah dan tekan tombol 'Cari'.
 # Judul aplikasi
 st.title("📚 Pencarian Buku Perpustakaan")
 
-# Mengunggah file JSON
-uploaded_file = st.file_uploader("Unggah file JSON data perpustakaan", type="json")
-
-# Membaca data dari file JSON yang diunggah
-data_perpustakaan = baca_data_dari_file(uploaded_file)
+# Data perpustakaan dari variabel langsung
+data_perpustakaan = data_json
 
 # Jika data berhasil dibaca
 if data_perpustakaan:
